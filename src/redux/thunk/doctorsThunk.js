@@ -1,5 +1,5 @@
 import { getEmployees, getWorklog } from '../../api/api';
-import { getDoctors } from '../actions/doctorsActions';
+import { getDoctors, getTimeWork } from '../actions/doctorsActions';
 
 export const getAsyncDoctors = () => {
   return (dispatch) => {
@@ -12,7 +12,7 @@ export const getAsyncDoctors = () => {
 export const getAsyncTimeWork = () => {
   return (dispatch) => {
     getWorklog()
-      .then((response) => getAsyncTimeWork(response))
+      .then((response) => dispatch(getTimeWork(response)))
       .catch((error) => console.log(error));
   };
 };

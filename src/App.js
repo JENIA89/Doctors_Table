@@ -6,6 +6,7 @@ import { getAsyncDoctors, getAsyncTimeWork } from './redux/thunk/doctorsThunk';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Spinner from './components/Spinner/Spinner';
+import DoctorItem from './components/DoctorItem/DoctorItem';
 
 function App() {
   const { employees, worklog, loading } = useSelector(({ doctors }) => doctors);
@@ -23,6 +24,13 @@ function App() {
         exact
         path='/'
         component={() => <DoctorsTable employees={employees} />}
+      />
+      <Route
+        path='/:id'
+        render={({ match }) => {
+          const { id } = match.params;
+          return <DoctorItem worklog={worklog} id={id} />;
+        }}
       />
     </div>
   );
