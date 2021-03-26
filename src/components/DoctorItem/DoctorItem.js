@@ -8,10 +8,12 @@ const columns = [
   {
     title: 'Прибыл',
     dataIndex: 'from',
+    align: 'center',
   },
   {
     title: 'Убыл',
     dataIndex: 'to',
+    align: 'center',
   },
 ];
 

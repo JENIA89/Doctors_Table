@@ -7,19 +7,22 @@ const columns = [
     title: 'Id',
     dataIndex: 'id',
     key: 'id',
-    render: (id) => <Link to={`${id}`}>{id}</Link>,
+    width: 40,
   },
   {
     title: 'ФИО',
     dataIndex: 'firstName',
     sorter: (a, b) => a.firstName.length - b.firstName.length,
+    render: (text, row, id) => <Link to={`${id + 1}`}>{text}</Link>,
     sortDirections: ['descend', 'ascend'],
     key: 'firstName',
+    align: 'center',
   },
   {
     title: 'Дата рождения',
     dataIndex: 'birthDate',
     key: 'birthDate',
+    align: 'center',
   },
 ];
 
