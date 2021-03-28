@@ -1,12 +1,11 @@
-import './App.css';
-import 'antd/dist/antd.css';
-import DoctorsTable from './components/DoctorsTable/DoctorsTable';
-import { Route } from 'react-router';
-import { getAsyncDoctors, getAsyncTimeWork } from './redux/thunk/doctorsThunk';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router';
+import DoctorsTable from './components/DoctorsTable/DoctorsTable';
+import { getAsyncDoctors, getAsyncTimeWork } from './redux/thunk/doctorsThunk';
 import Spinner from './components/Spinner/Spinner';
 import DoctorItem from './components/DoctorItem/DoctorItem';
+import 'antd/dist/antd.css';
 
 function App() {
   const { employees, worklog, loading } = useSelector(({ doctors }) => doctors);
@@ -20,18 +19,14 @@ function App() {
   if (loading) return <Spinner />;
   return (
     <div className='App'>
-      <Route
-        exact
-        path='/'
-        component={() => <DoctorsTable employees={employees} />}
-      />
-      <Route
-        path='/:id'
-        render={({ match }) => {
-          const { id } = match.params;
-          return <DoctorItem worklog={worklog} id={id} />;
-        }}
-      />
+      <Switch>
+        <Route
+          exact
+          path='/'
+          component={() => <DoctorsTable employees={employees} />}
+        />
+        <Route path='/:id' children={<DoctorItem worklog={worklog} />} />
+      </Switch>
     </div>
   );
 }

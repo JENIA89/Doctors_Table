@@ -1,5 +1,4 @@
 import { Table } from 'antd';
-import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 const columns = [
@@ -11,12 +10,10 @@ const columns = [
   },
   {
     title: 'ФИО',
-    dataIndex: 'firstName',
-    sorter: (a, b) => a.firstName.length - b.firstName.length,
-    render: (text, row, id) => <Link to={`${id + 1}`}>{text}</Link>,
-    sortDirections: ['descend', 'ascend'],
-    key: 'firstName',
+    dataIndex: 'myId',
+    key: 'myId',
     align: 'center',
+    render: (text) => <Link to={`${text.id}`}>{text.firstName}</Link>,
   },
   {
     title: 'Дата рождения',
@@ -32,11 +29,14 @@ const DoctorsTable = ({ employees }) => {
   employees.forEach((item) => {
     const newUser = { ...item };
     newUser.firstName = `${item.lastName} ${item.firstName} ${item.middleName}`;
-    newUser.birthDate = moment(item.birthDate).format('YYYY.DD.MM');
+    newUser.birthDate = item.birthDate.split('-').reverse().join('.');
+    newUser.myId = { id: item.id, firstName: newUser.firstName };
     data.push(newUser);
   });
 
-  return <Table columns={columns} dataSource={data} />;
+  return (
+    <Table columns={columns} dataSource={data} pagination={false} rowKey='id' />
+  );
 };
 
 export default DoctorsTable;
